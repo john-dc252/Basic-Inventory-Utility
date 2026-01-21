@@ -2,6 +2,7 @@ package io.github.john_dc252.utils.basicinventory
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.slideInHorizontally
@@ -33,7 +34,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,13 +50,13 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.Serializable
 
 @Serializable
-private object HomePage;
+private object HomePage
 
 @Serializable
-private object RegistrationPage;
+private object RegistrationPage
 
 @Serializable
-private object IdCheckPage;
+private object IdCheckPage
 
 class MainActivity : ComponentActivity() {
 
@@ -107,7 +107,7 @@ fun Main(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         val navController = rememberNavController()
-        val mainActivity = LocalContext.current as MainActivity
+        val mainActivity = LocalActivity.current as MainActivity
 
         NavHost(
             navController = navController,
@@ -203,7 +203,7 @@ data class BookInfo(val isbn: String, val title: String, val author: String)
 
 @Composable
 fun RegistrationForm(onRegistrationRequest: (BookInfo) -> Unit, onDismiss: () -> Unit) {
-    val mainActivity = LocalContext.current as MainActivity
+    val mainActivity = LocalActivity.current as MainActivity
     val isbnInput = rememberTextFieldState(initialText = "")
     val titleInput = rememberTextFieldState(initialText = "")
     val authorInput = rememberTextFieldState(initialText = "")
@@ -305,7 +305,7 @@ fun RegistrationForm(onRegistrationRequest: (BookInfo) -> Unit, onDismiss: () ->
 
 @Composable
 fun IdCheckView(onDismiss: () -> Unit) {
-    val mainActivity = LocalContext.current as MainActivity
+    val mainActivity = LocalActivity.current as MainActivity
     var scannedIsbn by rememberSaveable { mutableStateOf("") }
     val asyncScope = rememberCoroutineScope()
     var isBusy by rememberSaveable { mutableStateOf(false) }
